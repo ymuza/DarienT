@@ -4,6 +4,7 @@ Django settings for tu_credito project.
 
 from pathlib import Path
 import environ
+import rest_framework.filters
 
 # ======================
 # BASE DIR
@@ -19,7 +20,6 @@ env = environ.Env(
 
 # Carga automática del .env (más robusta)
 environ.Env.read_env(BASE_DIR / ".env")
-
 
 # print("=" * 50)
 # print(f"BASE_DIR: {BASE_DIR}")
@@ -48,11 +48,23 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
-
+    "django_filters",
     "bancos",
     "clientes",
     "creditos",
 ]
+
+# ===========================
+# CONFIGURACION DE PAGINACIÓN
+# ===========================
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+    "EXCEPTION_HANDLER": "tu_credito.exceptions.custom_exception_handler",
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",
+                                "rest_framework.filters.SearchFilter"),
+}
 
 # ======================
 # MIDDLEWARE

@@ -6,12 +6,14 @@ from .models import Cliente
 class ClienteAdmin(admin.ModelAdmin):
     list_display = (
         "nombre_completo",
+        "dni",
         "email",
         "tipo_persona",
         "banco",
     )
     search_fields = (
         "nombre_completo",
+        "dni",
         "email",
     )
     list_filter = (

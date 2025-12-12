@@ -11,6 +11,7 @@ class Cliente(models.Model):
         NATURAL = "NATURAL", "Natural"
         JURIDICO = "JURIDICO", "Jurídico"
 
+    dni = models.CharField(max_length=9, unique=True,  help_text="Documento Nacional de Identidad")
     nombre_completo = models.CharField(max_length=200)
     fecha_nacimiento = models.DateField()
     edad = models.PositiveSmallIntegerField(
@@ -30,4 +31,4 @@ class Cliente(models.Model):
         verbose_name_plural = "Clientes"
 
     def __str__(self) -> str:
-        return self.nombre_completo
+        return f"{self.nombre_completo}({self.dni})"

@@ -8,6 +8,18 @@ class ClienteSerializer(serializers.ModelSerializer):
         model = Cliente
         fields = "__all__"
 
+    def validate_dni(self, value):
+        qs = Cliente.objects.filter(dni=value)
+
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise serializers.ValidationError("Ya existe un cliente con ese DNI.")
+
+        return value
+
+
     def validate(self, data):
         """Valida que la edad coincida con la fecha de nacimiento."""
         fecha_nacimiento = data.get("fecha_nacimiento")
