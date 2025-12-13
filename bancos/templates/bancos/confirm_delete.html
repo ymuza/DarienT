@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Eliminar banco</h2>
+
+<p>
+    ¿Seguro que deseas eliminar el banco
+    <strong>{{ banco.nombre }}</strong>?
+</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'bancos:list' %}">Cancelar</a>
+</form>
+{% endblock %}
