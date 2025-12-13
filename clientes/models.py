@@ -31,4 +31,4 @@ class Cliente(models.Model):
         verbose_name_plural = "Clientes"
 
     def __str__(self) -> str:
-        return f"{self.nombre_completo}({self.dni})"
+        return f"{self.nombre_completo},({self.dni})"

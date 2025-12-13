@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Backoffice - Tu Crédito</title>
+</head>
+<body>
+<nav>
+    <a href="{% url 'bancos:list' %}">Bancos</a> |
+    <a href="{% url 'clientes:list' %}">Clientes</a> |
+    <a href="{% url 'creditos:list' %}">Créditos</a> |
+    <a href="{% url 'admin:logout' %}">Salir</a>
+</nav>
+<hr>
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+{% block content %}{% endblock %}
+</body>
+</html>

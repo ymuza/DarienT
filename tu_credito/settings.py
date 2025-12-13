@@ -1,8 +1,9 @@
 """
 Django settings for tu_credito project.
 """
-
+from datetime import timedelta
 from pathlib import Path
+
 import environ
 import rest_framework.filters
 
@@ -48,7 +49,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    "drf_spectacular",
     "django_filters",
+
     "bancos",
     "clientes",
     "creditos",
@@ -59,11 +62,49 @@ INSTALLED_APPS = [
 # ===========================
 
 REST_FRAMEWORK = {
+
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+
+    "DEFAULT_AUTHENTICATION_CLASSES": (  # con esto todaas llas clases tienen auth
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+
     "PAGE_SIZE": 10,
+
     "EXCEPTION_HANDLER": "tu_credito.exceptions.custom_exception_handler",
+
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",
                                 "rest_framework.filters.SearchFilter"),
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Tu Crédito API",
+    "DESCRIPTION": "API para gestión de Bancos, Clientes y Créditos",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+
+    # JWT support
+    "SECURITY": [{"bearerAuth": []}],
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
+# ======================
+# AUTENTICACIÓN CON JWT
+# ======================
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # ======================
@@ -95,6 +136,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATES[0]["DIRS"] = [BASE_DIR / "templates"]
+
+
 
 WSGI_APPLICATION = "tu_credito.wsgi.application"
 

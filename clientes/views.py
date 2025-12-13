@@ -1,8 +1,9 @@
-from django.shortcuts import render
 from psycopg import IntegrityError
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from tu_credito.permissions import IsStaffOrReadOnly
 from .models import Cliente
 from .serializers import ClienteSerializer
 
@@ -10,6 +11,7 @@ from .serializers import ClienteSerializer
 class ClienteViewSet(ModelViewSet):
     queryset = Cliente.objects.select_related("banco").all()
     serializer_class = ClienteSerializer
+    permission_classes = [IsStaffOrReadOnly]
 
     def create(self, request, *args, **kwargs):
         try:

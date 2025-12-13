@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Bancos</h1>
+
+<a href="{% url 'bancos:create' %}">Crear banco</a>
+
+<table border="1">
+    <tr>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Dirección</th>
+        <th>Acciones</th>
+
+    </tr>
+    {% for banco in bancos %}
+    <tr>
+        <td>{{ banco.nombre }}</td>
+        <td>{{ banco.get_tipo_display }}</td>
+        <td>{{ banco.direccion }}</td>
+        <td>
+            <a href="{% url 'bancos:delete' banco.id %}">
+                🗑️ Eliminar
+            </a>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
