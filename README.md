@@ -160,13 +160,3 @@ La aplicación estará disponible en:
 
 ---
 
-## Estado del proyecto
-
-✔️ CRUD completo  
-✔️ API REST segura  
-✔️ Backoffice web funcional  
-✔️ Validaciones de dominio  
-✔️ Tests automatizados  
-✔️ Dockerizado  
-
-El proyecto se considera **completo y listo para evaluación técnica**.
